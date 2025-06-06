@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "Validador de Formulario Personalizado",
+  "version": "1.0",
+  "description": "Una extensión para validar formularios específicos.",
+  "permissions": [
+    "activeTab",       // Permite interactuar con la pestaña activa
+    "scripting"        // Permite inyectar scripts en la página
+  ],
+  "host_permissions": [
+    "<all_urls>"       // Permite ejecutar scripts en todas las URLs
+                       // Puedes cambiar esto a un dominio específico si solo validas un sitio
+  ],
+  "action": {
+    //"default_popup": "popup.html",   Opcional: si quieres un pop-up al hacer clic en el ícono
+    //"default_icon": {
+      //"16": "images/icon16.png",
+      //"48": "images/icon48.png",
+      //"128": "images/icon128.png"
+    //}
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://sua.rosario.gob.ar/sua-webapp/solicitud2/solicitud.do?accion=ir&nivel=nivel3"], // O puedes poner "https://*.tusitio.com/*"
+      "js": ["content.js"]
+    }
+  ],
+  "icons": {
+    //"16": "images/icon16.png",
+    //"48": "images/icon48.png",
+    //"128": "images/icon128.png"
+  }
+}
