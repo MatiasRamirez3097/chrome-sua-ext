@@ -48,32 +48,32 @@ const isFieldComplete = (campo) => {
 // --- FUNCIÓN DE VALIDACIÓN (Ajustada para input y select) ---
 
 function validarFormularioCompleto() {
-  if (!formularioConfigurado) {
-    console.warn("Intentando validar antes de que el formulario dinámico esté configurado.");
-    return false;
-  }
-
-  let esValido = true;
-
-  // Validación: Recorrer todos los campos 'preguntas[NRO]' y asegurar que tienen un valor válido.
-  camposPreguntas.forEach((campo, index) => {
-    // Solo validamos campos habilitados y que existen
-    if (campo && !campo.disabled) {
-      if (!isFieldComplete(campo)) { // Usamos la función auxiliar aquí también
-        alert(`La pregunta #${index + 1} (en el formulario) no puede estar vacía. Por favor, selecciona una opción o ingresa un texto.`);
-        campo.focus();
-        esValido = false;
-      }
+    if (!formularioConfigurado) {
+        console.warn("Intentando validar antes de que el formulario dinámico esté configurado.");
+        return false;
     }
-  });
 
-  if (esValido) {
-    console.log("Formulario validado correctamente. ¡Listo para enviar!");
-  } else {
-    console.log("La validación del formulario falló.");
-  }
+    let esValido = true;
 
-  return esValido;
+    // Validación: Recorrer todos los campos 'preguntas[NRO]' y asegurar que tienen un valor válido.
+    camposPreguntas.forEach((campo, index) => {
+        // Solo validamos campos habilitados y que existen
+        if (campo && !campo.disabled) {
+            if (!isFieldComplete(campo)) { // Usamos la función auxiliar aquí también
+                alert(`La pregunta #${index + 1} (en el formulario) no puede estar vacía. Por favor, selecciona una opción o ingresa un texto.`);
+                campo.focus();
+                esValido = false;
+            }
+        }
+    });
+
+    if (esValido) {
+        console.log("Formulario validado correctamente. ¡Listo para enviar!");
+    } else {
+        console.log("La validación del formulario falló.");
+    }
+
+    return esValido;
 }
 
 
@@ -172,12 +172,22 @@ function configurarFormularioDinamico() {
                             {
                                 habilitarCampo(camposPreguntas[j]);
                             }
+                            for(let k = 10;k < 19; k++){
+                                deshabilitarCampo(camposPreguntas[k]);
+                            }
+                            deshabilitarCampo(camposPreguntas[4])
+                            deshabilitarCampo(camposPreguntas[5])
                         } else if (i == 10) {
                             for(let j = 11; j < 14; j++)
                             {
                                 habilitarCampo(camposPreguntas[j]);
                             }
-                        } else if (i<=4) {
+                        } else if (i == 14) {
+                            for(let j = 15; j < 19; j++)
+                            {
+                                habilitarCampo(camposPreguntas[j]);
+                            }
+                        } else if (i<=4 || i > 19) {
                             habilitarCampo(campoSiguiente);
                         } else {
                         // Si el campo actual se vacía, deshabilita el siguiente Y todos los que le siguen
@@ -185,6 +195,8 @@ function configurarFormularioDinamico() {
                                 deshabilitarCampo(camposPreguntas[j]);
                             }
                         }
+                    }else{
+                        
                     }
                     actualizarEstadoBotonEnviar();
                 });
