@@ -1,17 +1,51 @@
 // content.js
 console.log("¡Extensión de validación de formulario cargada y lista para la acción!");
+const domain = document.URL.split('://')[1];
+const subdomain = domain.split('.')[0];
+
+const produccionPos = {
+    trabajoEnVeredaPos: 'preguntas[7].idValorSelec',
+    trabajoExtraccionPos: 'preguntas[9].idValorSelec',
+    trabajoSubPos: 'preguntas[13].idValorSelec',
+    trabajoAereaPos: 'preguntas[17].idValorSelec',
+    afterCategorysPos: 'preguntas[23].idValorSelec',
+    beforeCategorysPos: 'preguntas[6].idValorSelec'
+}
+
+const testingPos = {
+    trabajoEnVeredaPos: 'preguntas[6].idValorSelec',
+    trabajoExtraccionPos: 'preguntas[8].idValorSelec',
+    trabajoSubPos: 'preguntas[12].idValorSelec',
+    trabajoAereaPos: 'preguntas[16].idValorSelec',
+    afterCategorysPos: 'preguntas[22].idValorSelec',
+    beforeCategorysPos: 'preguntas[5].idValorSelec'
+}
 
 // --- SELECTOR DEL DIV QUE YA EXISTE Y CUYO CONTENIDO SE CARGA DINÁMICAMENTE ---
-const divDatosExtrasExistente = document.querySelector('#datosExtras');
-
+let divDatosExtrasExistente;
+let formExistente
+//const divDatosExtrasExistente = document.querySelector('#datosExtras');
+if (document.querySelector("#datosExtras")){
+    divDatosExtrasExistente = document.querySelector("#datosExtras")
+} else {
+    formExistente = document.querySelector('form[name="datosExtrasF"]')
+}
 let formularioConfigurado = false; // Bandera para asegurar que la configuración se hace solo una vez
 
 // --- VARIABLES GLOBALES PARA LOS CAMPOS DEL FORMULARIO ---
-let camposPreguntas = []; // Array para almacenar los campos de preguntas[NRO].texto o preguntas[NRO].idValorSelec
+// // Array para almacenar los campos de preguntas[NRO].texto o preguntas[NRO].idValorSelec
 
 // Otras variables que podrías necesitar
 let botonEnviar;
 let formularioPrincipal;
+let datosExtrasTable;
+let trabajoEnVeredaPos;
+let trabajoExtraccionPos;
+let trabajoSubPos;
+let trabajoAereaPos;
+let afterCategorysPos;
+let beforeCategorysPos;
+let camposPreguntas;
 
 
 // --- FUNCIONES DE CONTROL DE ESTADO DE CAMPOS ---
@@ -41,8 +75,9 @@ const isFieldComplete = (campo) => {
 
     // La lógica de validación campo.value.trim() !== '' sigue funcionando para ambos tipos
     // siempre que tu <option value="">...</option> inicial esté vacío para los selects.
-    return campo.value.trim() !== '';
+    return campo.value.trim() !== '' && campo.value.trim() != -1;
 };
+
 
 
 // --- FUNCIÓN DE VALIDACIÓN (Ajustada para input y select) ---
@@ -81,161 +116,169 @@ function validarFormularioCompleto() {
 
 function actualizarEstadoBotonEnviar() {
     if (!formularioConfigurado) return;
+    
 
     // Ahora isFieldComplete ya está definida globalmente
     const todasPreguntasCompletas = camposPreguntas.every(isFieldComplete);
-
     if (todasPreguntasCompletas) {
         habilitarCampo(botonEnviar);
     } else {
+        //botonEnviar.disabled;
         deshabilitarCampo(botonEnviar);
     }
 }
 
+function deshabiltarMultiples(index, cant) {
+    for(let i = index+1; i <= index + cant;i++){
+        deshabilitarCampo(camposPreguntas[i])
+    }
+}
+
+function habiltarMultiples(index, cant) {
+    for(let i = index+1; i <= index + cant;i++){
+        habilitarCampo(camposPreguntas[i])
+    }
+}
+
+function habiltarCategorySelects()
+{
+    const categorySelectsNames = [ 
+        camposPreguntas[trabajoEnVeredaPos].name,
+        camposPreguntas[trabajoExtraccionPos].name,
+        camposPreguntas[trabajoSubPos].name,
+        camposPreguntas[trabajoAereaPos].name
+    ]
+    for(let i of categorySelectsNames)
+    {
+        for(const el of camposPreguntas){
+            if(el.name == i)
+            {
+                habilitarCampo(el)
+                break
+            }
+        }
+        
+    }
+    
+}
+const produccion = () => {
+    return subdomain == 'sua'
+}
+function trabajosEnVereda(campo, complete) {
+    isFieldComplete(campo) ? habilitarCampo(camposPreguntas[i+1]) : deshabilitarCampo(camposPreguntas[i+1])
+}
+// FORM VALIDATE
+function validateForm() {
+  let x = document.forms["solcitud"]["preguntas[4].texto"].value;
+  if (x == "") {
+    alert("Fecha de dictamen no puede quedar en blanco!");
+    return false;
+  }
+}
 // --- FUNCIÓN CENTRAL DE CONFIGURACIÓN DEL FORMULARIO DINÁMICO ---
 function configurarFormularioDinamico() {
     if (formularioConfigurado) return;
 
-    camposPreguntas = []; // Reiniciar el array de campos
-
-    // --- RECOPILACIÓN Y DESHABILITACIÓN INICIAL DE LOS CAMPOS 'preguntas[NRO]' ---
-    for (let i = 1; i <= 28; i++) { // El bucle ahora va del 1 al 28
-        let campoEncontrado = null;
-        let selectorCampo = '';
-
-        // Probamos con el nombre '.texto'
-        selectorCampo = `[name="preguntas[${i}].texto"]`;
-        campoEncontrado = divDatosExtrasExistente.querySelector(selectorCampo);
-
-        if (!campoEncontrado) {
-            // Si no se encuentra con '.texto', probamos con '.idValorSelec'
-            selectorCampo = `[name="preguntas[${i}].idValorSelec"]`;
-            campoEncontrado = divDatosExtrasExistente.querySelector(selectorCampo);
-        }
-
-        if (campoEncontrado) {
-            camposPreguntas.push(campoEncontrado);
-            deshabilitarCampo(campoEncontrado); // Deshabilitar el campo al agregarlo al array
-        } else {
-            // No se encontró el campo para este NRO, lo cual es esperado.
-            // Puedes ajustar el nivel de log si no quieres ver tantos warnings.
-            // console.warn(`Campo 'preguntas[${i}]' (ni .texto ni .idValorSelec) no encontrado.`);
-        }
-    }
-
-    if (camposPreguntas.length === 0) {
-        console.warn("No se encontró ningún campo con el patrón 'preguntas[NRO]' (ni .texto ni .idValorSelec). Revisa el rango o los selectores.");
-        return;
+    if (document.querySelector("#datosExtras")){
+        datosExtrasTable = document.querySelector("#datosExtras")
     } else {
-        console.log(`¡Se encontraron ${camposPreguntas.length} campos de preguntas (input/select) de la secuencia 1-28 y se deshabilitaron inicialmente!`);
-        console.log(camposPreguntas);
+        datosExtrasTable = document.querySelector('form[name="datosExtrasF"]')
     }
 
-    // --- ASIGNACIÓN DE OTROS CAMPOS Y FORMULARIO PRINCIPAL ---
-    botonEnviar = document.querySelector('[onclick="javacript:guardarSolicitud(false);"]'); // O un selector de tu botón
-    formularioPrincipal = document.querySelector('form'); // El formulario padre general
-
-    if (!botonEnviar || !formularioPrincipal) {
+    camposPreguntas = datosExtrasTable.querySelectorAll('input, select')
+    // --- RECOPILACIÓN Y DESHABILITACIÓN INICIAL DE LOS CAMPOS 'preguntas[NRO]' ---
+    for (let i = 1; i < camposPreguntas.length; i++) {
+        if(divDatosExtrasExistente) i != 0 && deshabilitarCampo(camposPreguntas[i])
+        else {
+            i != 1 && i != 0 && i != camposPreguntas.length - 1 && i != camposPreguntas.length - 2 &&deshabilitarCampo(camposPreguntas[i])
+            habilitarCampo(camposPreguntas[2])
+        }
+        if(produccion()) {
+            if (camposPreguntas[i].name == produccionPos.trabajoEnVeredaPos) trabajoEnVeredaPos = i
+            else if (camposPreguntas[i].name == produccionPos.trabajoExtraccionPos) trabajoExtraccionPos = i
+            else if (camposPreguntas[i].name == produccionPos.trabajoSubPos) trabajoSubPos = i
+            else if (camposPreguntas[i].name == produccionPos.trabajoAereaPos) trabajoAereaPos = i 
+            else if (camposPreguntas[i].name == produccionPos.afterCategorysPos) afterCategorysPos = i
+            else if (camposPreguntas[i].name == produccionPos.beforeCategorysPos) beforeCategorysPos = i
+        } else if (!produccion()) {
+            if (camposPreguntas[i].name == testingPos.trabajoEnVeredaPos) trabajoEnVeredaPos = i
+            else if (camposPreguntas[i].name == testingPos.trabajoExtraccionPos) trabajoExtraccionPos = i
+            else if (camposPreguntas[i].name == testingPos.trabajoSubPos) trabajoSubPos = i
+            else if (camposPreguntas[i].name == testingPos.trabajoAereaPos) trabajoAereaPos = i 
+            else if (camposPreguntas[i].name == testingPos.afterCategorysPos) afterCategorysPos = i
+            else if (camposPreguntas[i].name == testingPos.beforeCategorysPos) beforeCategorysPos = i
+        }
+    }
+    habiltarMultiples(afterCategorysPos, camposPreguntas.length -1)
+    //OTRAS ASIGNACIONES
+    //botonEnviar = document.querySelector('[onclick="javacript:guardarSolicitud(false);"]');
+    
+    botonEnviar = Array.from(document.querySelectorAll('button'))
+        .find(el => el.textContent === 'Generar solicitud');
+    formularioPrincipal = document.getElementById('solicitudF');
+    if(botonEnviar && formularioPrincipal) {
+        //actualizarEstadoBotonEnviar();
+    } else {
         console.warn("Advertencia: No se encontró el botón de envío o el formulario principal. La validación de envío podría verse afectada.");
     }
-
-    console.log("¡Contenido del formulario dinámico detectado y campos asignados!");
-    formularioConfigurado = true;
-
     // --- INICIALIZAR EL ESTADO DEL BOTÓN DE ENVÍO ---
-    actualizarEstadoBotonEnviar();
+    
 
+    for (let i = 0; i < camposPreguntas.length - 1; i++) {
+        const campoActual = camposPreguntas[i];
+        const campoSiguiente = camposPreguntas[i + 1];
 
-    // --- ADJUNTAR LISTENERS PARA HABILITAR EL SIGUIENTE CAMPO ---
-    // Habilitar el primer campo de la lista al inicio (si hay alguno)
-    if (camposPreguntas.length > 0) {
-        habilitarCampo(camposPreguntas[0]);
-
-        // Añadir listeners a cada campo para habilitar el siguiente
-        for (let i = 0; i < camposPreguntas.length - 1; i++) { // Iteramos hasta el penúltimo campo del array recopilado
-            const campoActual = camposPreguntas[i];
-            const campoSiguiente = camposPreguntas[i + 1];
-
-            if (campoActual && campoSiguiente) {
-                campoActual.addEventListener('change', (event) => { // Usamos 'change' para que funcione en ambos
-                    console.log(i)
-                    if(isFieldComplete(campoActual)) {
-                        if(i == 3){
-                            habilitarCampo(camposPreguntas[i+1])
-                            habilitarCampo(camposPreguntas[6])
-                            habilitarCampo(camposPreguntas[10])
-                            habilitarCampo(camposPreguntas[14])
-                        } else if(i == 4){
-                            habilitarCampo(camposPreguntas[i+1])
-                        } else if (i == 6) {
-                            for(let j = 7; j < 10; j++)
-                            {
-                                habilitarCampo(camposPreguntas[j]);
-                            }
-                            for(let k = 10;k < 19; k++){
-                                deshabilitarCampo(camposPreguntas[k]);
-                            }
-                            deshabilitarCampo(camposPreguntas[4])
-                            deshabilitarCampo(camposPreguntas[5])
-                        } else if (i == 10) {
-                            for(let j = 11; j < 14; j++)
-                            {
-                                habilitarCampo(camposPreguntas[j]);
-                            }
-                        } else if (i == 14) {
-                            for(let j = 15; j < 19; j++)
-                            {
-                                habilitarCampo(camposPreguntas[j]);
-                            }
-                        } else if (i<=4 || i > 19) {
-                            habilitarCampo(campoSiguiente);
-                        } else {
-                        // Si el campo actual se vacía, deshabilita el siguiente Y todos los que le siguen
-                            for (let j = i + 1; j < camposPreguntas.length; j++) {
-                                deshabilitarCampo(camposPreguntas[j]);
-                            }
-                        }
-                    }else{
-                        
+        if (campoActual && campoSiguiente) {
+            campoActual.addEventListener('change', (event) => {
+                if(isFieldComplete(campoActual)){
+                    if(i == beforeCategorysPos){
+                        habiltarCategorySelects()
+                        habilitarCampo(camposPreguntas[afterCategorysPos])
+                    } else if(i == trabajoEnVeredaPos ){
+                        habiltarMultiples(i,1)
+                    } else if(i == trabajoExtraccionPos) {
+                        habiltarMultiples(i,3)
+                        deshabiltarMultiples(trabajoSubPos-1, 3)
+                        deshabiltarMultiples(trabajoAereaPos-1, 4)
+                    } else if(i == trabajoSubPos) {
+                        habiltarMultiples(i,3)
+                        deshabiltarMultiples(trabajoExtraccionPos-1, 3)
+                    } else if(i == trabajoAereaPos) {
+                        habiltarMultiples(i,4)
+                        deshabiltarMultiples(trabajoExtraccionPos-1, 3)
+                    } else if (i<beforeCategorysPos) {
+                        habilitarCampo(campoSiguiente);
                     }
-                    actualizarEstadoBotonEnviar();
-                });
-
-                // Si necesitas validación en tiempo real para inputs (mientras se escribe), añade un 'input' listener solo para ellos:
-                if (campoActual.tagName === 'INPUT') {
-                    campoActual.addEventListener('input', () => {
-                        // Aquí, si el campo actual se vacía, solo necesitas actualizar el siguiente y el botón de enviar.
-                        // La lógica de 'change' ya se encargará de deshabilitar toda la cadena.
-                        if (isFieldComplete(campoActual)) {
-                             // Si se completa al escribir, solo actualiza el botón si es necesario,
-                             // el 'change' listener ya se encargará de habilitar el siguiente campo.
-                        } else {
-                             // Si se vacía al escribir, la lógica del 'change' listener lo manejará
-                             // cuando el campo pierda el foco o cambie definitivamente.
-                        }
-                        actualizarEstadoBotonEnviar(); // Aún así, actualizar el botón puede ser útil en cada pulsación.
-                    });
                 }
-            }
+                else
+                {
+                    if(i == trabajoEnVeredaPos ){
+                        deshabiltarMultiples(i,1)
+                    } else if(i == trabajoExtraccionPos) {
+                        deshabiltarMultiples(i,3)
+                        habilitarCampo(camposPreguntas[trabajoEnVeredaPos])
+                        habilitarCampo(camposPreguntas[trabajoSubPos])
+                        habilitarCampo(camposPreguntas[trabajoAereaPos])
+                    } else if(i == trabajoSubPos) {
+                        deshabiltarMultiples(i,3)
+                        habilitarCampo(camposPreguntas[trabajoExtraccionPos])
+                    } else if(i == trabajoAereaPos) {
+                        deshabiltarMultiples(i,4)
+                        habilitarCampo(camposPreguntas[trabajoExtraccionPos])
+                    } else if(i==beforeCategorysPos){
+                        deshabiltarMultiples(trabajoEnVeredaPos-1,afterCategorysPos-1)
+                    } else if(i<beforeCategorysPos){
+                        deshabilitarCampo(campoSiguiente)
+                    }
+                }
+                //actualizarEstadoBotonEnviar()
+            })
+
         }
     }
-
-
-    // --- ADJUNTAR LISTENER AL ENVÍO DEL FORMULARIO PRINCIPAL ---
-    if (formularioPrincipal) {
-        formularioPrincipal.addEventListener('submit', function(event) {
-            console.log("Intento de envío de formulario principal...");
-            if (!validarFormularioCompleto()) {
-                event.preventDefault(); // Detiene el envío si la validación falla
-            }
-        });
-    } else {
-        console.warn("No se encontró un formulario principal para adjuntar el listener de submit.");
-    }
-
+    formularioConfigurado = true
     // Desconectar el observer una vez que el formulario se ha configurado completamente
     observer.disconnect();
-    console.log("MutationObserver desconectado después de configurar el formulario.");
 }
 
 
@@ -255,6 +298,7 @@ if (divDatosExtrasExistente) {
     observer.observe(divDatosExtrasExistente, observerConfig);
     console.log(`MutationObserver iniciado en el div '#datosExtras', esperando la carga de su contenido y campos...`);
 } else {
+    if(formExistente) configurarFormularioDinamico()
     console.error("Error: El div '#datosExtras' no se encontró en el DOM al cargar el content script.");
     console.log("Asegúrate de que el ID es correcto y que el div está presente antes de que el script se ejecute.");
 }
