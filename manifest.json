@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Validador de Formulario Personalizado",
+  "name": "Validar Carga SUA PyP",
   "version": "1.0",
   "description": "Una extensión para validar formularios específicos.",
   "permissions": [
@@ -11,23 +11,16 @@
     "<all_urls>"       // Permite ejecutar scripts en todas las URLs
                        // Puedes cambiar esto a un dominio específico si solo validas un sitio
   ],
-  "action": {
-    //"default_popup": "popup.html",   Opcional: si quieres un pop-up al hacer clic en el ícono
-    //"default_icon": {
-      //"16": "images/icon16.png",
-      //"48": "images/icon48.png",
-      //"128": "images/icon128.png"
-    //}
-  },
   "content_scripts": [
     {
-      "matches": ["https://sua.rosario.gob.ar/sua-webapp/solicitud2/solicitud.do?accion=ir&nivel=nivel3"], // O puedes poner "https://*.tusitio.com/*"
-      "js": ["content.js"]
+      "matches": [
+        "https://sua.rosario.gob.ar/sua-webapp/solicitud2/solicitud.do?accion=ir&nivel=nivel3",
+        "https://sua.rosario.gob.ar/sua-webapp/solicitud/ver.do",
+        "https://t-sua.rosario.gob.ar/sua-webapp/solicitud2/solicitud.do?accion=ir&nivel=nivel3"
+      ],
+      "js": ["content.js"],
+      "type": "module",
+      "run_at": "document_idle"
     }
-  ],
-  "icons": {
-    //"16": "images/icon16.png",
-    //"48": "images/icon48.png",
-    //"128": "images/icon128.png"
-  }
+  ]
 }
