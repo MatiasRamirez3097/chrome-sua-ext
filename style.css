@@ -1,0 +1,69 @@
+body{
+    display: flex !important;
+}
+
+#main{
+    text-align: center;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: grey;
+}
+
+#direccionSolicitudAccordion{
+    text-align: center;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: grey;
+}
+
+select{
+    background-color: slategray;
+    cursor: pointer;
+    border: solid black 2px;
+    font-size: 12px !important;
+    height: 25px;
+    width: 250px !important;
+    margin: auto;
+}
+
+option{
+    background-color: slategray;
+    cursor: pointer;
+    border: solid black 2px;
+    font-size: 12px !important;
+    height: 25px!;
+    width: 250px !important;
+    margin: auto
+}
+
+input{
+    background-color:slategray;
+    border: solid black 2px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 12px !important;
+    height: 20px;
+    width: 242px !important;
+    margin: auto;
+}
+
+button{
+    background-color:slategray;
+    border: solid black 2px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 12px !important;
+    height: 30px;
+    width: 200px !important;
+    margin: auto;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.ui-state-error{
+    background: slategray !important;
+    padding: auto !important;
+    font-size: 12px !important;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+#bis{
+    text-align:justify ;
+}

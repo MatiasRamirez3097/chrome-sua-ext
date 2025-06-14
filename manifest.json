@@ -22,7 +22,8 @@
   "content_scripts": [
     {
       "matches": ["https://sua.rosario.gob.ar/sua-webapp/solicitud2/solicitud.do?accion=ir&nivel=nivel3"], // O puedes poner "https://*.tusitio.com/*"
-      "js": ["content.js"]
+      "js": ["content.js"],
+      "css": ["style.css"]
     }
   ],
   "icons": {
