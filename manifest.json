@@ -4,29 +4,23 @@
   "version": "1.0",
   "description": "Una extensión para validar formularios específicos.",
   "permissions": [
-    "activeTab",       // Permite interactuar con la pestaña activa
-    "scripting"        // Permite inyectar scripts en la página
+    "activeTab",
+    "scripting"
   ],
   "host_permissions": [
-    "<all_urls>"       // Permite ejecutar scripts en todas las URLs
-                       // Puedes cambiar esto a un dominio específico si solo validas un sitio
+    "<all_urls>"
   ],
   "content_scripts": [
     {
-<<<<<<< HEAD
-      "matches": ["https://sua.rosario.gob.ar/sua-webapp/solicitud2/solicitud.do?accion=ir&nivel=nivel3"], // O puedes poner "https://*.tusitio.com/*"
-      "js": ["content.js"],
-      "css": ["style.css"]
-=======
       "matches": [
         "https://sua.rosario.gob.ar/sua-webapp/solicitud2/solicitud.do?accion=ir&nivel=nivel3",
         "https://sua.rosario.gob.ar/sua-webapp/solicitud/ver.do",
         "https://t-sua.rosario.gob.ar/sua-webapp/solicitud2/solicitud.do?accion=ir&nivel=nivel3"
       ],
       "js": ["content.js"],
+      "css": ["style.css"],
       "type": "module",
       "run_at": "document_idle"
->>>>>>> 2e69e7c2cc707663e57e1ed20f4e634050c891a5
     }
   ]
 }

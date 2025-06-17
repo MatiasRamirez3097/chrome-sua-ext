@@ -1,19 +1,48 @@
-body{
-    display: flex !important;
-}
-
 #main{
     text-align: center;
+    border: solid black 3px;
     width: 100% !important;
     height: 100% !important;
-    background-color: grey;
+    background-color: rgb(31, 30, 30) !important;
 }
 
-#direccionSolicitudAccordion{
-    text-align: center;
-    width: 100% !important;
-    height: 100% !important;
-    background-color: grey;
+#navibar{
+    background-color: #355f4d !important;
+    border: solid black 2px;
+}
+
+#navibar table tbody{
+    background-color: #355f4d !important;
+}
+
+#bis{
+    text-align:justify ;
+    border: solid black 2px;
+}
+
+#menu{
+    background-color: rgb(31, 30, 30) !important;
+    border: solid black 2px;
+}
+
+#menu td.varios{
+    background-color: rgb(31, 30, 30) !important;
+    border: solid black 2px;
+}
+
+#content{
+    background-color: rgb(31, 30, 30) !important;
+    border: solid black 2px;
+}
+
+#header{
+    background-color: black !important;
+}
+
+textarea{
+    background-color: rgb(31, 30, 30) !important;
+    width: 99% !important;
+    border: solid black 2px;
 }
 
 select{
@@ -39,7 +68,7 @@ option{
 input{
     background-color:slategray;
     border: solid black 2px;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 12px !important;
     height: 20px;
     width: 242px !important;
@@ -49,21 +78,78 @@ input{
 button{
     background-color:slategray;
     border: solid black 2px;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 12px !important;
     height: 30px;
     width: 200px !important;
     margin: auto;
-    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+body{
+    background-color: rgb(31, 30, 30);
+}
+
+tbody{
+    background-color: rgb(31, 30, 30);
+}
+
+a.variositem{
+    background-color: rgb(31, 30, 30) !important;
 }
 
 .ui-state-error{
     background: slategray !important;
     padding: auto !important;
     font-size: 12px !important;
-    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
+    border: solid black 2px;
 }
 
-#bis{
-    text-align:justify ;
+.loginText{
+    background-color:slategray;
+    border: solid black 2px;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 10px !important;
+    margin: auto;
+    text-align: left;
+}
+
+.tablaMenu{
+    background-color: rgb(31, 30, 30) !important;
+}
+
+.celda{
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 12px !important;
+    background-color: rgb(31, 30, 30) !important;
+    border: solid black 2px;
+    text-align: left !important;
+}
+
+.etiqueta{
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 12px !important;
+    color: white !important;
+}
+
+.datos{
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 12px !important;
+    color: white !important;
+    font-size: 12px !important;
+}
+
+.ui-helper-reset{
+    border: 0px !important;
+    background-color: rgb(31, 30, 30) !important
+}
+
+.ui-widget-content{
+    border: 0px !important;
+    background: rgb(31, 30, 30) !important
+}
+
+.encabezado{
+    background-color: #355f4d !important;
+    border: solid black 2px !important;
 }
