@@ -4,6 +4,7 @@
     width: 100% !important;
     height: 100% !important;
     background-color: rgb(31, 30, 30) !important;
+    color: white !important;
 }
 
 #navibar{
@@ -25,9 +26,27 @@
     border: solid black 2px;
 }
 
+#menu td.encabezadoMenu{
+    border-bottom: 0px !important;
+    background-color: rgb(31, 30, 30) !important;
+    text-align:center !important;
+    padding: 5px !important;
+    font-weight: normal !important;
+}
+
+#menu td.subitem{
+    background-color: rgb(31, 30, 30) !important;
+    border: solid black 2px;
+}
+
 #menu td.varios{
     background-color: rgb(31, 30, 30) !important;
     border: solid black 2px;
+    padding: 17px 5px 17px 5px !important;
+}
+
+#menu td.item{
+    border-bottom: 0px !important;
 }
 
 #content{
@@ -39,10 +58,23 @@
     background-color: black !important;
 }
 
+table{
+    width: 100% !important;
+    border-collapse: collapse !important;
+    table-layout: auto !important;
+}
+
+a{
+    color: white !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 12px !important;
+}
+
 textarea{
     background-color: rgb(31, 30, 30) !important;
     width: 99% !important;
     border: solid black 2px;
+    color: white;
 }
 
 select{
@@ -53,6 +85,8 @@ select{
     height: 25px;
     width: 250px !important;
     margin: auto;
+    color: white;
+    text-align: center;
 }
 
 option{
@@ -73,6 +107,8 @@ input{
     height: 20px;
     width: 242px !important;
     margin: auto;
+    color: white;
+    text-align: left;
 }
 
 button{
@@ -83,6 +119,7 @@ button{
     height: 30px;
     width: 200px !important;
     margin: auto;
+    color: white;
 }
 
 body{
@@ -91,6 +128,17 @@ body{
 
 tbody{
     background-color: rgb(31, 30, 30);
+}
+
+img[src="/sua-webapp/images/logomrbarra2.gif"] {
+  display: block;
+  width: 150px; 
+  height: 50px;
+  filter: opacity(0); 
+  background-image: url("Imagenes/logo.jpg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 a.variositem{
@@ -124,6 +172,7 @@ a.variositem{
     background-color: rgb(31, 30, 30) !important;
     border: solid black 2px;
     text-align: left !important;
+    padding: 5px;
 }
 
 .etiqueta{
@@ -141,15 +190,47 @@ a.variositem{
 
 .ui-helper-reset{
     border: 0px !important;
-    background-color: rgb(31, 30, 30) !important
+    background-color: rgb(31, 30, 30) !important;
 }
 
 .ui-widget-content{
     border: 0px !important;
-    background: rgb(31, 30, 30) !important
+    background: rgb(31, 30, 30) !important;
 }
 
 .encabezado{
     background-color: #355f4d !important;
     border: solid black 2px !important;
+}
+
+.ui-accordion .ui-accordion-content{
+    padding: 0px !important;
+    margin: 0px !important;
+}
+
+.ui-accordion .ui-accordion-header a{
+    background:#355f4d !important;
+    border: solid black 2px !important;
+    text-align: center !important;
+}
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight{
+    border: solid rgb(31, 30, 30) 0px !important;
+}
+
+a.nivel1, a.nivel2, a.nivel3, a.nivel4, a.nivel5, a.nivel6, a.nivel7, a.nivel8, a.nivel9, a.nivel10{
+    padding: 2px 5px 2px 5px !important;
+    background-color: #355f4d !important;
+    border: solid black 2px !important;
+}
+
+.ui-state-error, .ui-widget-content .ui-state-error, .ui-widget-header .ui-state-error{
+    text-align: center;
+    border: 2px solid #cd0a0a;
+}
+
+td.subitem{
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 12px !important;
+    line-height: normal !important;
 }
