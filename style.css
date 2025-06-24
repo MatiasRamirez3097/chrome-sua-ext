@@ -130,17 +130,6 @@ tbody{
     background-color: rgb(31, 30, 30);
 }
 
-img[src="/sua-webapp/images/logomrbarra2.gif"] {
-  display: block;
-  width: 150px; 
-  height: 50px;
-  filter: opacity(0); 
-  background-image: url("Imagenes/logo.jpg");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
 a.variositem{
     background-color: rgb(31, 30, 30) !important;
 }
