@@ -235,3 +235,7 @@ input::placeholder{
 #accordion > div:nth-child(1) > div{
     color: white !important;
 }
+
+#datosExtras > table > tbody > tr:nth-child(31) > td:nth-child(2) > span > input[type=text]{
+    width: 99% !important;
+}
